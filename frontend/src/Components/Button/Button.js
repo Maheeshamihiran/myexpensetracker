@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
- function Button({name ,icon ,onClick,bg,bpad,color,bRad,hcolor}) {
+ function Button({name, icon, onClick, bg, bpad, color, bRad, hoverBg}) {
   return (
-    <ButtonStyled style ={{
+    <ButtonStyled 
+      style={{
         backgroundColor: bg,
         padding: bpad,
         color: color,
         borderRadius: bRad
-        
-    }} onClick={onClick}>
-
+      }} 
+      hoverBg={hoverBg}
+      onClick={onClick}>
         {icon}
         {name}
-      
     </ButtonStyled>
   )
 }
@@ -30,7 +30,7 @@ const ButtonStyled = styled.button`
     transition: all 0.3s ease-in-out;
 
     &:hover {
-        opacity: 0.8;
+        background-color: ${props => props.hoverBg || 'inherit'} !important;
     }
 `;
 

@@ -81,14 +81,13 @@ function  Form() {
     
   <div className='submit-btn'>
     <Button
-    
       name={'Add Income'}
       icon={plus}
       bpad={'.8rem 1.6rem'}
       bRad={'30px'}
-      bg={'var(--color-accent'}
+      bg={'var(--color-accent)'}
       color={'#fff'}
-      
+      hoverBg={'var(--color-green)'}
      />
     </div>
     </FormStyled>   
