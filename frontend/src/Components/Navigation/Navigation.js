@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { menuItems } from '../../utilis/menuItems';
 import { signout } from '../../utilis/icon';
-import avatar from '../../img/avatar.jpg'; // Assuming you have an avatar image
+import avatar from '../../img/avatar.jpg';
 
-function  Navigation(active, setActive) {
+function  Navigation({active, setActive}) {
    
   return (
     <NavStyled>

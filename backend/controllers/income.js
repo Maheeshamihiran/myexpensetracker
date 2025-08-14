@@ -34,19 +34,21 @@ exports.addIncome = async (req, res) => {
 
 exports.getIncome = async (req, res) => {
     try {
-        const incomes = await IncomeSchema.find().sort({ createdAt: -1 });
+        const incomes = await Income.find().sort({ createdAt: -1 });
         res.status(200).json(incomes);
     } catch (error) {
+        console.error('Error fetching incomes:', error);
         res.status(500).json({ error: 'Server error while fetching incomes.' });
     }
 }
+
 exports.deleteIncome = async (req, res) => {
     const { id } = req.params;
-    IncomeSchema.findByIdAndDelete(id)
-        .then((income) => {
-            res.status(200).json({ message: 'Income deleted successfully' });
-        })
-        .catch((error) => {
-            res.status(500).json({ error: 'Server error while deleting the income.' });
-        });
+    try {
+        await Income.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Income deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting income:', error);
+        res.status(500).json({ error: 'Server error while deleting the income.' });
+    }
 }
