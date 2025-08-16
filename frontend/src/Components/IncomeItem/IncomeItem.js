@@ -1,5 +1,5 @@
 import React from 'react'
-import {takeaway, clothing,book,food, medical,tv,calender, dollar ,comment,money, freelance,bitcoin,accounts,piggy,stocks,card } from '../../utilis/icon';
+import {takeaway, clothing,book,food, medical,tv,calender, dollar ,comment,money, freelance,bitcoin,accounts,piggy,stocks,card, settings } from '../../utilis/icon';
 import Button from '../Button/Button';
 import { trash } from '../../utilis/icon';
 import styled from 'styled-components';
@@ -44,8 +44,8 @@ import styled from 'styled-components';
   }
   const expenseCatIcon = () => {
 switch (category){
-  case 'education':
-   return book;
+case 'education':
+return book;
 case 'groceries':
 return food;
 case 'health':
@@ -57,7 +57,12 @@ return takeaway;
 case 'clothing':
 return clothing;
 case 'travelling':
-return freelance;
+return freelance
+
+case  'entertaiment':
+return  takeaway;
+case 'maintains':
+return  settings;
 case 'other':
 return dollar;
 default:
@@ -90,7 +95,7 @@ return dollar;
                     bg={'var(--primary-color)'}
                     color={'#222260'}
                     hoverBg={'var(--color-green)'}
-                    
+                    onClick={() => deleteItem(id) }
                  
 
                 />
@@ -154,7 +159,7 @@ return dollar;
             align-items: center;
             .text {
                 display: flex;
-                flex-direction: column;
+                
                 gap: 0.2rem;
             }
             p {
@@ -167,6 +172,7 @@ return dollar;
             .btn-con {
                 display: flex;
                 align-items: center;
+                justify-content: center;
             }
         }
     }

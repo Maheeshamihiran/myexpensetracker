@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
         --primary-color: 'color:rgba(34,34,96,0.4)'; 
         --color-green :#42AD00;
         --color-grey:#aaa;
+        --color-red:#cf3119;
         --color-accent:#F56692;
         --color-delete:#ff0000;
        }
@@ -24,4 +25,9 @@ export const GlobalStyle = createGlobalStyle`
           overflow: hidden;
           color:rgba(34,34,96,0.6);
    }
+          h2,h1,h3,h5,h6{
+
+          color: var(--primary-color);
+          
+          }
 `;

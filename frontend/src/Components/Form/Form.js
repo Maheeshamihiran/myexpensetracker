@@ -7,7 +7,7 @@ import Button from '../Button/Button'
 import { plus } from '../../utilis/icon'
 
 function  Form() {
-    const {addIncome}=useGlobalContext()
+    const {addIncome,getIncomes}=useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -24,6 +24,13 @@ function  Form() {
     const handleSubmit = e => {
         e.preventDefault();
         addIncome(inputState);
+       setInputState({
+        title: '',
+        amount: '',
+        category: '',
+        date: '',
+        description: '',
+       })
        
     }
     return (
@@ -109,6 +116,7 @@ input, select, textarea {
     resize: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: border 0.3s ease;
+    width: 100%;
 
     &::placeholder {
         color: #aaa;
@@ -117,6 +125,14 @@ input, select, textarea {
     &:focus {
         border: 2px solid #42ad00;
     }
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container input {
+    width: 100%;
 }
 
 .input-control {

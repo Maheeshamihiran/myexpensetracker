@@ -15,7 +15,10 @@ import { InnerLayout } from '../../styles/Layouts'
 }
 
 const DashboardStyled = styled.div`
+h1{
+    color: rgba(34, 34, 96, 1);
 
+}
 `;
 
 export default Dashboard;
