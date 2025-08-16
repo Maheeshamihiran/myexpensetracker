@@ -3,13 +3,15 @@ import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layouts'
 import { useGlobalContext } from '../../context/globalContext';
 import Form from '../Form/Form';
-import IncomeItem from '../IncomeItem/IncomeItem'; // Assuming you have a Form component for adding income 
+import IncomeItem from '../incomeItem/incomeItem'; 
 function Income() {
   const{addIncome,incomes,getIncomes} = useGlobalContext();
   
   React.useEffect(() => {
     getIncomes();
-   },[incomes]) // Fetch incomes when the component mounts
+   },[]) // Fetch incomes when the component mounts
+   
+   console.log('Incomes data:', incomes);
   
   return (
     <IncomeStyled>
@@ -20,23 +22,24 @@ function Income() {
           <Form/>
         </div>
         <div className="incomes">
-             {incomes.map((income) => {
-              const {_id, title, amount, category, description, date} = income;
-              return<IncomeItem
-                 key={_id}
-                 id={_id}
-                 title={title}
-                 amount={amount} date={date}
-                 category={category}
-                 description={description}
-                 indicatorColor="var(--color-green)"
-
-                />
-                
            
-                
-              
-             })}
+           
+              { incomes.map((income) => {
+                 const {_id, title, amount, category, description, date} = income;
+                 console.log('Rendering income:', income);
+                 return <IncomeItem
+                   key={_id}
+                   id={_id}
+                   title={title}
+                   amount={amount}
+                   date={date}
+                   category={category}
+                   description={description}
+                   indicatorColor="var(--color-green)"
+                   type="income"
+                 />
+               })}
+             
         </div>
 
         </div>
@@ -46,6 +49,15 @@ function Income() {
 }
 
 const IncomeStyled = styled.div`
+  display: flex;
+  overflow: hidden;
+  .income-content {
+    display: flex;
+    gap: 2rem;
+    .incomes {
+      flex: 1;
+
+    }   
 
 `;
 

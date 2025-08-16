@@ -44,11 +44,22 @@ exports.getIncome = async (req, res) => {
 
 exports.deleteIncome = async (req, res) => {
     const { id } = req.params;
+    console.log('Deleting income with ID:', id);
+    
     try {
-        await Income.findByIdAndDelete(id);
+        if (!id) {
+            return res.status(400).json({ error: 'Income ID is required.' });
+        }
+        
+        const deletedIncome = await Income.findByIdAndDelete(id);
+        
+        if (!deletedIncome) {
+            return res.status(404).json({ error: 'Income not found.' });
+        }
+        
         res.status(200).json({ message: 'Income deleted successfully' });
     } catch (error) {
         console.error('Error deleting income:', error);
-        res.status(500).json({ error: 'Server error while deleting the income.' });
+        res.status(500).json({ error: 'Server error while deleting the income.', details: error.message });
     }
 }
