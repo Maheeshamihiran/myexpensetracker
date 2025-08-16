@@ -26,9 +26,9 @@ function Expenses() {
         <div className="incomes">
            
            
-              { expenses.map((income) => {
-                 const {_id, title, amount, category, description, date} = income;
-                 console.log('Rendering income:', income);
+              { expenses.map((expense) => {
+                 const {_id, title, amount, category, description, date} = expense;
+                 console.log('Rendering income:', expense);
                  return <IncomeItem
                    key={_id}
                    id={_id}
@@ -37,8 +37,8 @@ function Expenses() {
                    date={date}
                    category={category}
                    description={description}
-                   indicatorColor="var(--color-green)"
-                   type="income"
+                   indicatorColor="var(--color-red)"
+                   type="expense"
                    deleteItem={deleteExpense}
                  />
                })}
@@ -75,7 +75,7 @@ const ExpenseStyled= styled.div`
     span {
       font-size: 2rem;
       font-weight: 800;
-      color: var(--color-green);
+      color: var(--color-red);
     }
   }
   

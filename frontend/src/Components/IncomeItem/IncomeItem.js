@@ -15,7 +15,8 @@ import styled from 'styled-components';
     indicatorColor,
     type}) {
     
-  console.log('IncomeItem props:', { id, title, amount, date, category, description });
+  console.log('IncomeItem props:', { id, title, amount, date, category, description, type });
+  console.log('Category:', category, 'Type:', type);
   
   
   const  categoryIcon = () => {
@@ -43,37 +44,36 @@ import styled from 'styled-components';
     } 
   }
   const expenseCatIcon = () => {
-switch (category){
-case 'education':
-return book;
-case 'groceries':
-return food;
-case 'health':
-return medical;
-case 'subscriptions':
-return tv;
-case 'takeaways':
-return takeaway;
-case 'clothing':
-return clothing;
-case 'travelling':
-return freelance
-
-case  'entertaiment':
-return  takeaway;
-case 'maintains':
-return  settings;
-case 'other':
-return dollar;
-default:
-return dollar;
+    switch (category){
+      case 'education':
+        return book;
+      case 'groceries':
+        return food;
+      case 'health':
+        return medical;
+      case 'subscriptions':
+        return tv;
+      case 'takeaways':
+        return takeaway;
+      case 'clothing':
+        return clothing;
+      case 'travelling':
+        return freelance;
+      case 'entertainment':
+        return tv;
+      case 'maintenance':
+        return settings;
+      case 'other':
+        return dollar;
+      default:
+        return dollar;
+    }
   }
-}
   
   return (
     <IncomeItemStyled indicatorColor={indicatorColor} type={type}>
        <div className="icon">
-        {type === 'income' ? categoryIcon() : expenseCatIcon()}
+        {type === 'expense' ?   expenseCatIcon():categoryIcon()}
        </div>
        <div className="content">
            <h5>{title}</h5>
