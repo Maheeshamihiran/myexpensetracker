@@ -171,7 +171,109 @@ h1{
            
 
         }
+    }
+    
+    /* Desktop (1200px+) */
+    @media (min-width: 1200px) {
+        .stats-con {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+        }
+    }
+    
+    /* Laptop (992px - 1199px) */
+    @media (max-width: 1199px) and (min-width: 992px) {
+        .stats-con {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            
+            .chart-con {
+                grid-column: 1/3;
+                height: 350px;
+            }
+            
+            .history-con {
+                grid-column: 3;
+            }
+        }
+    }
+    
+    /* Tablet (768px - 991px) */
+    @media (max-width: 991px) and (min-width: 768px) {
+        .stats-con {
+            grid-template-columns: 1fr;
+            
+            .chart-con {
+                grid-column: 1;
+                
+                .amount-con {
+                    grid-template-columns: repeat(3, 1fr);
+                    
+                    .balance {
+                        grid-column: span 1;
+                    }
+                }
+            }
+            
+            .history-con {
+                grid-column: 1;
+            }
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .stats-con {
+            padding: 1rem 0;
+            gap: 1rem;
+            
+            .chart-con {
+                height: 300px;
+                
+                .amount-con {
+                    grid-template-columns: 1fr;
+                    gap: 0.5rem;
+                    margin-top: 1rem;
+                    
+                    .income, .expense, .balance {
+                        grid-column: span 1;
+                        padding: 0.5rem;
+                        
+                        p {
+                            font-size: 1.5rem;
+                        }
+                    }
+                    
+                    .balance p {
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
         
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .stats-con {
+            .chart-con {
+                height: 250px;
+                
+                .amount-con {
+                    .income, .expense, .balance {
+                        p {
+                            font-size: 1.2rem;
+                        }
+                    }
+                    
+                    .balance p {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
     }
 `;
 

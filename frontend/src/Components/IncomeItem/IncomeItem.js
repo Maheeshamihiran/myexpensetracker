@@ -185,5 +185,29 @@ import { dateFormat } from '../../utilis/dateFormat';
             }
         }
     }
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+        
+        .icon {
+            width: 50px;
+            height: 50px;
+            i {
+                font-size: 2rem;
+            }
+        }
+        
+        .content {
+            .inner-content {
+                flex-direction: column;
+                gap: 1rem;
+                
+                .btn-con {
+                    justify-content: center;
+                }
+            }
+        }
+    }
 `;
 export default IncomeItem;

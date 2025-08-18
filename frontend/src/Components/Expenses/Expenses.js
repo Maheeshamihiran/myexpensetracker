@@ -90,9 +90,39 @@ const ExpenseStyled= styled.div`
     gap: 1rem;
     .incomes {
       flex: 1;
-
     }   
-
+  }
+  
+  /* Tablet and small laptop (1024px and below) */
+  @media (max-width: 1024px) {
+    .income-content {
+      padding: 1rem;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .incomes {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .total-income {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      
+      span {
+        font-size: 1.5rem;
+      }
+    }
+  }
 `;
 
 export default Expenses;

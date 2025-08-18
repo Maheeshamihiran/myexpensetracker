@@ -215,16 +215,60 @@ input, select, textarea {
         }
     }
     .submit-btn {
+        display: flex;
+        gap: 1rem;
+        
         button {
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1;
 
             &:hover {
                 background:var(--color-green);
             }
         }
     }
-
-
-
+    
+    /* Desktop (1200px+) */
+    @media (min-width: 1200px) {
+        gap: 1rem;
+    }
+    
+    /* Laptop (992px - 1199px) */
+    @media (max-width: 1199px) and (min-width: 992px) {
+        gap: 0.8rem;
+    }
+    
+    /* Tablet (768px - 991px) */
+    @media (max-width: 991px) and (min-width: 768px) {
+        gap: 0.8rem;
+        
+        .submit-btn {
+            flex-direction: column;
+            
+            button {
+                width: 100%;
+            }
+        }
+    }
+    
+    /* Mobile (767px and below) */
+    @media (max-width: 767px) {
+        gap: 0.5rem;
+        
+        input, select, textarea {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .submit-btn {
+            flex-direction: column;
+            gap: 0.5rem;
+            
+            button {
+                width: 100%;
+                padding: 0.75rem 1rem;
+            }
+        }
+    }
 `;
 export default Form;
