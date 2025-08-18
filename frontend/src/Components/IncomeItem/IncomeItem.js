@@ -3,6 +3,7 @@ import {takeaway, clothing,book,food, medical,tv,calender, dollar ,comment,money
 import Button from '../Button/Button';
 import { trash } from '../../utilis/icon';
 import styled from 'styled-components';
+import { dateFormat } from '../../utilis/dateFormat';
 
  function IncomeItem({
     id,
@@ -80,7 +81,7 @@ import styled from 'styled-components';
            <div className='inner-content'>
               <div className='text'>
                 <p>{dollar} {amount}</p>
-                <p>{calender} {date}</p>
+                <p>{calender} {dateFormat(date)}</p>
                 <p>{comment} {description}</p>
                     
                     
