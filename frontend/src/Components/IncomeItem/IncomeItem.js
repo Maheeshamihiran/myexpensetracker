@@ -1,5 +1,5 @@
 import React from 'react'
-import {takeaway, clothing,book,food, medical,tv,calender, dollar ,comment,money, freelance,bitcoin,accounts,piggy,stocks,card, settings } from '../../utilis/icon';
+import {takeaway, clothing,book,food, medical,tv,calender, dollar,expenses ,comment,money, freelance,bitcoin,accounts,piggy,stocks,card, settings } from '../../utilis/icon';
 import Button from '../Button/Button';
 import { trash } from '../../utilis/icon';
 import styled from 'styled-components';
@@ -56,14 +56,14 @@ import { dateFormat } from '../../utilis/dateFormat';
         return tv;
       case 'takeaways':
         return takeaway;
-      case 'clothing':
+      case 'shopping':
         return clothing;
       case 'travelling':
         return freelance;
       case 'entertainment':
         return tv;
       case 'bills':
-        return settings;
+        return expenses;
       case 'other':
         return dollar;
       default:
