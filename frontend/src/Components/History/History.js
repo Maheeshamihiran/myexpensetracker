@@ -29,7 +29,7 @@ function History() {
             }
             
 
-          Rs{!amount<0}</p>
+          Rs{amount}</p>
 
           
 
