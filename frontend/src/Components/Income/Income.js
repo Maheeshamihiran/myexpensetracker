@@ -5,7 +5,11 @@ import { useGlobalContext } from '../../context/globalContext';
 import Form from '../Form/Form';
 import IncomeItem from '../incomeItem/incomeItem'; 
 function Income() {
-  const{addIncome,incomes,getIncomes,deleteIncome,totalIncome} = useGlobalContext();
+  const{addIncome,incomes,getIncomes,deleteIncome,totalIncome,setEditingItem} = useGlobalContext();
+  
+  const handleEditItem = (item) => {
+    setEditingItem(item);
+  };
   
   React.useEffect(() => {
     getIncomes();
@@ -40,6 +44,7 @@ function Income() {
                    indicatorColor="var(--color-green)"
                    type="income"
                    deleteItem={deleteIncome}
+                   editItem={handleEditItem}
                  />
                })}
              

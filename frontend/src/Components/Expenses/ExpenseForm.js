@@ -7,7 +7,19 @@ import Button from '../Button/Button'
 import { plus } from '../../utilis/icon'
 
 function  ExpenseForm() {
-    const {addExpense,getExpense,error,setError}=useGlobalContext()
+    const {addExpense,updateExpense,getExpense,error,setError,editingItem,setEditingItem}=useGlobalContext()
+    
+    React.useEffect(() => {
+        if (editingItem) {
+            setInputState({
+                title: editingItem.title || '',
+                amount: editingItem.amount || '',
+                category: editingItem.category || '',
+                date: editingItem.date ? new Date(editingItem.date) : '',
+                description: editingItem.description || '',
+            });
+        }
+    }, [editingItem]);
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -24,15 +36,19 @@ function  ExpenseForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        addExpense(inputState);
-       setInputState({
-        title: '',
-        amount: '',
-        category: '',
-        date: '',
-        description: '',
-       })
-       
+        if (editingItem) {
+            updateExpense(editingItem._id, inputState);
+            setEditingItem(null);
+        } else {
+            addExpense(inputState);
+        }
+        setInputState({
+            title: '',
+            amount: '',
+            category: '',
+            date: '',
+            description: '',
+        });
     }
     return (
   <ExpenseFormStyled onSubmit={handleSubmit}>
@@ -89,7 +105,7 @@ function  ExpenseForm() {
     
   <div className='submit-btn'>
     <Button
-      name={'Add Expense'}
+      name={editingItem ? 'Update Expense' : 'Add Expense'}
       icon={plus}
       bpad={'.8rem 1.6rem'}
       bRad={'30px'}
@@ -97,6 +113,25 @@ function  ExpenseForm() {
       color={'#fff'}
       hoverBg={'var(--color-red)'}
      />
+     {editingItem && (
+       <Button
+         name={'Cancel'}
+         bpad={'.8rem 1.6rem'}
+         bRad={'30px'}
+         bg={'#ccc'}
+         color={'#333'}
+         onClick={() => {
+           setEditingItem(null);
+           setInputState({
+             title: '',
+             amount: '',
+             category: '',
+             date: '',
+             description: '',
+           });
+         }}
+       />
+     )}
     </div>
     </ExpenseFormStyled>   
 )

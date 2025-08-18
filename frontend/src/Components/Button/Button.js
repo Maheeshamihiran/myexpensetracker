@@ -10,7 +10,7 @@ import styled from 'styled-components'
         color: color,
         borderRadius: bRad
       }} 
-      hoverBg={hoverBg}
+      $hoverBg={hoverBg}
       onClick={onClick}>
         {icon}
         {name}
@@ -30,7 +30,7 @@ const ButtonStyled = styled.button`
     transition: all 0.3s ease-in-out;
 
     &:hover {
-        background-color: ${props => props.hoverBg || 'inherit'} !important;
+        background-color: ${props => props.$hoverBg || 'inherit'} !important;
     }
 `;
 

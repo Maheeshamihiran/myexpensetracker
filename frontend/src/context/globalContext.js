@@ -7,6 +7,7 @@ export const GlobalProvider = ({ children }) => {
       const [expenses,setExpenses] = useState([]);
       const [incomes, setIncomes] = useState([]);
       const [error, setError] = useState(null);
+      const [editingItem, setEditingItem] = useState(null);
 
       //incomes
 
@@ -31,6 +32,18 @@ export const GlobalProvider = ({ children }) => {
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
+        }
+      }
+
+      const updateIncome = async (id, income) => {
+        try {
+          const response = await axios.put(`${BASE_URL}/update-income/${id}`, income);
+          alert('Income updated successfully!');
+          getIncomes();
+        } catch (err) {
+          const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
+          setError(errorMessage);
+          alert(`Error: ${errorMessage}`);
         }
       }
 
@@ -82,6 +95,18 @@ export const GlobalProvider = ({ children }) => {
           setError(errorMessage);
         }
       }
+
+      const updateExpense = async (id, expense) => {
+        try {
+          const response = await axios.put(`${BASE_URL}/update-expense/${id}`, expense);
+          alert('Expense updated successfully!');
+          getExpenses();
+        } catch (err) {
+          const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
+          setError(errorMessage);
+          alert(`Error: ${errorMessage}`);
+        }
+      }
       
       const deleteExpense = async (id) => {
         try {
@@ -119,19 +144,21 @@ export const GlobalProvider = ({ children }) => {
         <GlobalContext.Provider value={{
           addIncome,
           getIncomes,
+          updateIncome,
           incomes,
           deleteIncome,
           totalIncome,
           addExpense,
           getExpenses,
+          updateExpense,
           expenses,
           deleteExpense,
           totalExpense,
           tranacctionHistory,
           error,
-          setError
-
-
+          setError,
+          editingItem,
+          setEditingItem
         }}>
           {children}
         </GlobalContext.Provider>

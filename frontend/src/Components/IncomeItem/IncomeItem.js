@@ -13,11 +13,11 @@ import { dateFormat } from '../../utilis/dateFormat';
     category,
     description,
     deleteItem,
+    editItem,
     indicatorColor,
     type}) {
     
-  console.log('IncomeItem props:', { id, title, amount, date, category, description, type });
-  console.log('Category:', category, 'Type:', type);
+
   
   
   const  categoryIcon = () => {
@@ -72,7 +72,7 @@ import { dateFormat } from '../../utilis/dateFormat';
   }
   
   return (
-    <IncomeItemStyled indicatorColor={indicatorColor} type={type}>
+    <IncomeItemStyled $indicatorColor={indicatorColor} $type={type}>
        <div className="icon">
         {type === 'expense' ?   expenseCatIcon():categoryIcon()}
        </div>
@@ -90,6 +90,15 @@ import { dateFormat } from '../../utilis/dateFormat';
               </div>
               <div className ='btn-con'>
                 <Button
+                    icon={<i className="fa-solid fa-edit"></i>}
+                    bpad={'0.5rem'}
+                    bRad={'50%'}
+                    bg={'var(--color-accent)'}
+                    color={'#fff'}
+                    hoverBg={'var(--color-green)'}
+                    onClick={() => editItem && editItem({_id: id, title, amount, date, category, description})}
+                />
+                <Button
                     icon={trash}
                     bpad={'0.5rem'}
                     bRad={'50%'}
@@ -97,8 +106,6 @@ import { dateFormat } from '../../utilis/dateFormat';
                     color={'#222260'}
                     hoverBg={'var(--color-green)'}
                     onClick={() => deleteItem(id) }
-                 
-
                 />
               </div>
        </div>
@@ -151,7 +158,7 @@ import { dateFormat } from '../../utilis/dateFormat';
                 width: 0.8rem;
                 height: 0.8rem;
                 border-radius: 50%;
-                background-color: ${props => props.indicatorColor || '#ccc'};
+                background-color: ${props => props.$indicatorColor || '#ccc'};
             }
         }
         .inner-content {
@@ -174,6 +181,7 @@ import { dateFormat } from '../../utilis/dateFormat';
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                gap: 0.5rem;
             }
         }
     }

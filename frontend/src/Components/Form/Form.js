@@ -7,7 +7,7 @@ import Button from '../Button/Button'
 import { plus } from '../../utilis/icon'
 
 function  Form() {
-    const {addIncome,getIncomes,error,setError}=useGlobalContext()
+    const {addIncome,updateIncome,getIncomes,error,setError,editingItem,setEditingItem}=useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -15,6 +15,18 @@ function  Form() {
         date: '',
         description: '',
     })
+    
+    React.useEffect(() => {
+        if (editingItem) {
+            setInputState({
+                title: editingItem.title || '',
+                amount: editingItem.amount || '',
+                category: editingItem.category || '',
+                date: editingItem.date ? new Date(editingItem.date) : '',
+                description: editingItem.description || '',
+            });
+        }
+    }, [editingItem]);
     const {title, amount, category, date, description} = inputState;
 
     const handleInput = name => e => {
@@ -22,21 +34,35 @@ function  Form() {
         setError('')
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addIncome(inputState);
-       setInputState({
-        title: '',
-        amount: '',
-        category: '',
-        date: '',
-        description: '',
-       })
-       
+        try {
+            console.log('Form submitted. editingItem:', editingItem);
+            console.log('inputState:', inputState);
+            if (editingItem) {
+                console.log('Updating income with ID:', editingItem._id);
+                await updateIncome(editingItem._id, inputState);
+                setEditingItem(null);
+            } else {
+                console.log('Adding new income');
+                await addIncome(inputState);
+            }
+            setInputState({
+                title: '',
+                amount: '',
+                category: '',
+                date: '',
+                description: '',
+            });
+        } catch (err) {
+            console.error('Form submission error:', err);
+            setError(err.message || 'An error occurred');
+        }
     }
     return (
   <FormStyled onSubmit={handleSubmit}>
     {error && <p className='error'>{error}</p>}
+    {editingItem && <p className='info'>Editing: {editingItem.title}</p>}
     <div className="input-control">
         <input type="text"
         value={title}
@@ -89,7 +115,7 @@ function  Form() {
     
   <div className='submit-btn'>
     <Button
-      name={'Add Income'}
+      name={editingItem ? 'Update Income' : 'Add Income'}
       icon={plus}
       bpad={'.8rem 1.6rem'}
       bRad={'30px'}
@@ -97,6 +123,25 @@ function  Form() {
       color={'#fff'}
       hoverBg={'var(--color-green)'}
      />
+     {editingItem && (
+       <Button
+         name={'Cancel'}
+         bpad={'.8rem 1.6rem'}
+         bRad={'30px'}
+         bg={'#ccc'}
+         color={'#333'}
+         onClick={() => {
+           setEditingItem(null);
+           setInputState({
+             title: '',
+             amount: '',
+             category: '',
+             date: '',
+             description: '',
+           });
+         }}
+       />
+     )}
     </div>
     </FormStyled>   
 )
@@ -106,6 +151,22 @@ const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  
+  .error {
+    color: red;
+    background: #ffe6e6;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid red;
+  }
+  
+  .info {
+    color: blue;
+    background: #e6f3ff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid blue;
+  }
 input, select, textarea {
     font-family: inherit;
     font-size:  1rem;
