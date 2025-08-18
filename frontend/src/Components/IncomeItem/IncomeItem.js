@@ -62,7 +62,7 @@ import { dateFormat } from '../../utilis/dateFormat';
         return freelance;
       case 'entertainment':
         return tv;
-      case 'maintenance':
+      case 'bills':
         return settings;
       case 'other':
         return dollar;

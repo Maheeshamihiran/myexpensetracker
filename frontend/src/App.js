@@ -8,6 +8,7 @@ import Navigation from './Components/Navigation/Navigation';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Income from './Components/Income/Income';
 import Expenses from './Components/Expenses/Expenses';
+import ViewTransactions from './Components/ViewTransactions/ViewTransactions';
 import { useGlobalContext } from './context/globalContext';
 function App() {
 
@@ -19,19 +20,13 @@ const displayData =( ) => {
     case 1:
       return <Dashboard />;
     case 2:
-      return<Dashboard />;
+      return <ViewTransactions />;
     case 3:
        return <Income />;
     case 4:
       return <Expenses />;
     default:
         return <Dashboard />;
-
-    //   return <h1>Reports</h1>;
-    // case 4:
-    //   return <h1>Settings</h1>;
-    // default:
-    //   return <h1>Dashboard</h1>;
   }
 }
 
