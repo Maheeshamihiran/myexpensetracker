@@ -104,6 +104,14 @@ export const GlobalProvider = ({ children }) => {
         });
         return totalExpense;
       }
+
+      const tranacctionHistory =() => {
+        const history = [...incomes, ...expenses];
+             history.sort((a,b) => {
+              return new Date(b.createdAt) - new Date(a.createdAt)
+             })
+             return history.slice(0,3)
+      }
     
    
       // Fetch incomes when the provider mounts
@@ -119,7 +127,9 @@ export const GlobalProvider = ({ children }) => {
           expenses,
           deleteExpense,
           totalExpense,
-          error
+          tranacctionHistory,
+          error,
+          setError
 
 
         }}>
