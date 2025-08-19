@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import bg from './img/bg.jpg';
 import { MainLayout } from './styles/Layouts';
@@ -9,12 +9,38 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import Income from './Components/Income/Income';
 import Expenses from './Components/Expenses/Expenses';
 import ViewTransactions from './Components/ViewTransactions/ViewTransactions';
+import Login from './Components/Auth/Login';
+import Signup from './Components/Auth/Signup';
 import { useGlobalContext } from './context/globalContext';
 function App() {
-
-const [active, setActive] = React.useState(1);
-
- const global = useGlobalContext ()
+  const [active, setActive] = React.useState(1);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  const global = useGlobalContext();
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+    setLoading(false);
+  }, []);
+  
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+  };
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    setUser(null);
+  };
 const displayData =( ) => {
   switch (active) {
     case 1:
@@ -34,16 +60,45 @@ const orbMemo = useMemo(() => {
   return <Obs />;
 }, []);
 
+  if (loading) {
+    return (
+      <AppStyled bg={bg} className="App">
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', fontSize: '1.5rem'}}>
+          Loading...
+        </div>
+      </AppStyled>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <AppStyled bg={bg} className="App">
+        {showSignup ? (
+          <Signup switchToLogin={() => setShowSignup(false)} />
+        ) : (
+          <Login 
+            onLogin={handleLogin} 
+            switchToSignup={() => setShowSignup(true)} 
+          />
+        )}
+      </AppStyled>
+    );
+  }
+
   return (
     <AppStyled bg={bg} className="App">
-    {orbMemo}   
-    <MainLayout>
-     <Navigation  active={active}  setActive={setActive} />
-     <main>
-      {displayData()}
-    
-     </main>
-    </MainLayout>
+      {orbMemo}   
+      <MainLayout>
+        <Navigation 
+          active={active} 
+          setActive={setActive} 
+          user={user}
+          onLogout={handleLogout}
+        />
+        <main>
+          {displayData()}
+        </main>
+      </MainLayout>
     </AppStyled>
   );
 

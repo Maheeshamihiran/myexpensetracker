@@ -4,7 +4,7 @@ import { menuItems } from '../../utilis/menuItems';
 import { signout } from '../../utilis/icon';
 import avatar from '../../img/avatar.jpg';
 
-function  Navigation({active, setActive}) {
+function  Navigation({active, setActive, user, onLogout}) {
    
   return (
     <NavStyled>
@@ -36,7 +36,7 @@ function  Navigation({active, setActive}) {
         
        </ul>
        <div className ="bottom-nav">
-        <li> {signout} Sign Out  </li>
+        <li onClick={onLogout} style={{cursor: 'pointer'}}> {signout} Sign Out  </li>
         </div>
 
       </NavStyled>

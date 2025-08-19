@@ -19,7 +19,7 @@ import{useWindowSize} from '../../utilis/usewindowsize';
           `;
 
    const OrbStyled = styled.div`
-      width :70vh;
+       width :70vh;
         height: 70vh;
         position: absolute;
         border-radius: 50%;
