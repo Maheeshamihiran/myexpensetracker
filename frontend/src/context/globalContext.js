@@ -1,5 +1,8 @@
  import React, { useState } from 'react' 
  import axios from 'axios'
+ import { toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css';
+ import { ToastContainer } from 'react-toastify';
 
 const BASE_URL = 'http://localhost:5000/api/v1';
 const GlobalContext = React.createContext();
@@ -15,11 +18,11 @@ export const GlobalProvider = ({ children }) => {
         try {
           const response = await axios.post(`${BASE_URL}/add-income`, income);
           console.log(response.data);
-          alert('Income added successfully!');
+          toast.success('Income added successfully!');
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
         getIncomes();
       }
@@ -38,12 +41,12 @@ export const GlobalProvider = ({ children }) => {
       const updateIncome = async (id, income) => {
         try {
           const response = await axios.put(`${BASE_URL}/update-income/${id}`, income);
-          alert('Income updated successfully!');
+          toast.success('Income updated successfully!');
           getIncomes();
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
       }
 
@@ -51,12 +54,12 @@ export const GlobalProvider = ({ children }) => {
         try {
           const response = await axios.delete(`${BASE_URL}/delete-income/${id}`);
           console.log(response.data);
-          alert('Income deleted successfully!');
+          toast.success('Income deleted successfully!');
           getIncomes(); // Refresh the income list after deletion
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
         getIncomes();
       }
@@ -76,11 +79,11 @@ export const GlobalProvider = ({ children }) => {
         try {
           const response = await axios.post(`${BASE_URL}/add-expense`, expense);
           console.log(response.data);
-          alert('Expense added successfully!');
+          toast.success('Expense added successfully!');
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
         getExpenses();
       }
@@ -99,12 +102,12 @@ export const GlobalProvider = ({ children }) => {
       const updateExpense = async (id, expense) => {
         try {
           const response = await axios.put(`${BASE_URL}/update-expense/${id}`, expense);
-          alert('Expense updated successfully!');
+          toast.success('Expense updated successfully!');
           getExpenses();
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
       }
       
@@ -112,12 +115,12 @@ export const GlobalProvider = ({ children }) => {
         try {
           const response = await axios.delete(`${BASE_URL}/delete-expense/${id}`);
           console.log(response.data);
-          alert('Expense deleted successfully!');
+          toast.success('Expense deleted successfully!');
           getExpenses(); // Refresh the income list after deletion
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
-          alert(`Error: ${errorMessage}`);
+          toast.error(`Error: ${errorMessage}`);
         }
         getExpenses();
       }
@@ -161,6 +164,18 @@ export const GlobalProvider = ({ children }) => {
           setEditingItem
         }}>
           {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </GlobalContext.Provider>
       );
     }

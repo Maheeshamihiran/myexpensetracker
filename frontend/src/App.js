@@ -12,6 +12,10 @@ import ViewTransactions from './Components/ViewTransactions/ViewTransactions';
 import Login from './Components/Auth/Login';
 import Signup from './Components/Auth/Signup';
 import { useGlobalContext } from './context/globalContext';
+
+
+// In your component's JSX
+
 function App() {
   const [active, setActive] = React.useState(1);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
