@@ -4,6 +4,7 @@ exports.addExpense = async (req, res) => {
     console.log(req.body);
 
     const { title, amount, date, category, description } = req.body;
+    const userId = req.user.id;
 
     try {
         if (!title || !amount || !category) {
@@ -20,7 +21,8 @@ exports.addExpense = async (req, res) => {
             amount: numAmount,
             date,
             category,
-            description
+            description,
+            user: userId
         });
 
         await expense.save();
@@ -34,7 +36,7 @@ exports.addExpense = async (req, res) => {
 
 exports.getExpense = async (req, res) => {
     try {
-        const expenses = await Expense.find().sort({ createdAt: -1 });
+        const expenses = await Expense.find({ user: req.user.id }).sort({ createdAt: -1 });
         res.status(200).json(expenses);
     } catch (error) {
         res.status(500).json({ error: 'Server error while fetching expenses.' });
@@ -50,9 +52,11 @@ exports.updateExpense = async (req, res) => {
             return res.status(400).json({ error: 'Expense ID is required.' });
         }
         
-        const updatedExpense = await Expense.findByIdAndUpdate(id, {
-            title, amount, date, category, description
-        }, { new: true });
+        const updatedExpense = await Expense.findOneAndUpdate(
+            { _id: id, user: req.user.id },
+            { title, amount, date, category, description },
+            { new: true }
+        );
         
         if (!updatedExpense) {
             return res.status(404).json({ error: 'Expense not found or unauthorized.' });
@@ -69,7 +73,7 @@ exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
     
     try {
-        const deletedExpense = await Expense.findByIdAndDelete(id);
+        const deletedExpense = await Expense.findOneAndDelete({ _id: id, user: req.user.id });
         
         if (!deletedExpense) {
             return res.status(404).json({ error: 'Expense not found or unauthorized.' });

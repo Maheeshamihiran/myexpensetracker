@@ -4,7 +4,7 @@ exports.addIncome = async (req, res) => {
     console.log(req.body);
 
     const { title, amount, date, category, description } = req.body;
-    const userId = req.user?.id;
+    const userId = req.user.id;
 
     try {
         if (!title || !amount || !category) {
@@ -21,7 +21,8 @@ exports.addIncome = async (req, res) => {
             amount: numAmount,
             date,
             category,
-            description
+            description,
+            user: userId
         });
 
         await income.save();
@@ -34,10 +35,8 @@ exports.addIncome = async (req, res) => {
 }
 
 exports.getIncome = async (req, res) => {
-    const userId = req.user?.id;
-    
     try {
-        const incomes = await Income.find().sort({ createdAt: -1 });
+        const incomes = await Income.find({ user: req.user.id }).sort({ createdAt: -1 });
         res.status(200).json(incomes);
     } catch (error) {
         console.error('Error fetching incomes:', error);
@@ -48,16 +47,17 @@ exports.getIncome = async (req, res) => {
 exports.updateIncome = async (req, res) => {
     const { id } = req.params;
     const { title, amount, date, category, description } = req.body;
-    const userId = req.user?.id;
     
     try {
         if (!id) {
             return res.status(400).json({ error: 'Income ID is required.' });
         }
         
-        const updatedIncome = await Income.findByIdAndUpdate(id, {
-            title, amount, date, category, description
-        }, { new: true });
+        const updatedIncome = await Income.findOneAndUpdate(
+            { _id: id, user: req.user.id },
+            { title, amount, date, category, description },
+            { new: true }
+        );
         
         if (!updatedIncome) {
             return res.status(404).json({ error: 'Income not found or unauthorized.' });
@@ -72,7 +72,6 @@ exports.updateIncome = async (req, res) => {
 
 exports.deleteIncome = async (req, res) => {
     const { id } = req.params;
-    const userId = req.user?.id;
     console.log('Deleting income with ID:', id);
     
     try {
@@ -80,7 +79,7 @@ exports.deleteIncome = async (req, res) => {
             return res.status(400).json({ error: 'Income ID is required.' });
         }
         
-        const deletedIncome = await Income.findByIdAndDelete(id);
+        const deletedIncome = await Income.findOneAndDelete({ _id: id, user: req.user.id });
         
         if (!deletedIncome) {
             return res.status(404).json({ error: 'Income not found or unauthorized.' });

@@ -107,7 +107,7 @@ function Signup({ switchToLogin }) {
             bRad="30px"
             bg="var(--color-accent)"
             color="#fff"
-            hoverBg={'var(--color-green)'}
+            hoverBg={"var(--color-grey)"}
           />
         </form>
         <p className="switch-auth">

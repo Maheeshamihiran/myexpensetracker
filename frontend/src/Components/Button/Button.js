@@ -21,6 +21,7 @@ import styled from 'styled-components'
 const ButtonStyled = styled.button`
     display: flex;
     align-items: center;
+    justify-content: center;
     outline: none;
     gap: 0.5rem;
     font-size: 1rem;
@@ -28,6 +29,7 @@ const ButtonStyled = styled.button`
     cursor: pointer;
     border: none;
     transition: all 0.3s ease-in-out;
+  
 
     &:hover {
         background-color: ${props => props.$hoverBg || 'inherit'} !important;
