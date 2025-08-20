@@ -107,6 +107,7 @@ function Signup({ switchToLogin }) {
             bRad="30px"
             bg="var(--color-accent)"
             color="#fff"
+            hoverBg={'var(--color-green)'}
           />
         </form>
         <p className="switch-auth">
@@ -123,6 +124,7 @@ const SignupStyled = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  
 
   .auth-container {
     background: rgba(255, 255, 255, 0.95);

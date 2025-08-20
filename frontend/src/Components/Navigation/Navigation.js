@@ -36,7 +36,7 @@ function  Navigation({active, setActive, user, onLogout}) {
         
        </ul>
        <div className ="bottom-nav">
-        <li onClick={onLogout} style={{cursor: 'pointer'}}> {signout} Sign Out  </li>
+        <li onClick={onLogout} style={{cursor: 'pointer'}}> {signout} Log Out  </li>
         </div>
 
       </NavStyled>
