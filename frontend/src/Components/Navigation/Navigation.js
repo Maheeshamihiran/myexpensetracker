@@ -49,7 +49,7 @@ const NavStyled = styled.nav`
    height: 100% 
    border: 3px solid #FFFFFF;
    backdrop-filter: blur(1.5px);
-   border-radius:32px;
+   border-radius:20px;
    display:flex;
    flex-direction: column;
    justify-content: space-between;

@@ -118,7 +118,7 @@ import { dateFormat } from '../../utilis/dateFormat';
    background :#FCF6F9;
    border: 2px solid #FFFFFF;
    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.04);
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 1rem;
     margin: 1rem;
     display: flex;
