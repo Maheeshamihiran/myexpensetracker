@@ -4,7 +4,6 @@ exports.addExpense = async (req, res) => {
     console.log(req.body);
 
     const { title, amount, date, category, description } = req.body;
-    const userId = req.user?.id;
 
     try {
         if (!title || !amount || !category) {
@@ -34,8 +33,6 @@ exports.addExpense = async (req, res) => {
 }
 
 exports.getExpense = async (req, res) => {
-    const userId = req.user?.id;
-    
     try {
         const expenses = await Expense.find().sort({ createdAt: -1 });
         res.status(200).json(expenses);
@@ -47,7 +44,6 @@ exports.getExpense = async (req, res) => {
 exports.updateExpense = async (req, res) => {
     const { id } = req.params;
     const { title, amount, date, category, description } = req.body;
-    const userId = req.user?.id;
     
     try {
         if (!id) {
@@ -71,7 +67,6 @@ exports.updateExpense = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
-    const userId = req.user?.id;
     
     try {
         const deletedExpense = await Expense.findByIdAndDelete(id);
