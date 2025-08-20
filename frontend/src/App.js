@@ -67,6 +67,7 @@ const orbMemo = useMemo(() => {
   if (loading) {
     return (
       <AppStyled bg={bg} className="App">
+          {orbMemo}  
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', fontSize: '1.5rem'}}>
           Loading...
         </div>
@@ -77,6 +78,7 @@ const orbMemo = useMemo(() => {
   if (!isAuthenticated) {
     return (
       <AppStyled bg={bg} className="App">
+          {orbMemo}  
         {showSignup ? (
           <Signup switchToLogin={() => setShowSignup(false)} />
         ) : (

@@ -16,7 +16,10 @@ export const GlobalProvider = ({ children }) => {
 
       const addIncome = async (income) => {
         try {
-          const response = await axios.post(`${BASE_URL}/add-income`, income);
+          const token = localStorage.getItem('token');
+          const response = await axios.post(`${BASE_URL}/add-income`, income, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           console.log(response.data);
           toast.success('Income added successfully!');
         } catch (err) {
@@ -29,7 +32,10 @@ export const GlobalProvider = ({ children }) => {
 
       const getIncomes = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/get-income`);
+          const token = localStorage.getItem('token');
+          const response = await axios.get(`${BASE_URL}/get-income`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           setIncomes(response.data);
           console.log(response.data);
         } catch (err) {
@@ -40,7 +46,10 @@ export const GlobalProvider = ({ children }) => {
 
       const updateIncome = async (id, income) => {
         try {
-          const response = await axios.put(`${BASE_URL}/update-income/${id}`, income);
+          const token = localStorage.getItem('token');
+          const response = await axios.put(`${BASE_URL}/update-income/${id}`, income, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           toast.success('Income updated successfully!');
           getIncomes();
         } catch (err) {
@@ -52,16 +61,18 @@ export const GlobalProvider = ({ children }) => {
 
       const deleteIncome = async (id) => {
         try {
-          const response = await axios.delete(`${BASE_URL}/delete-income/${id}`);
+          const token = localStorage.getItem('token');
+          const response = await axios.delete(`${BASE_URL}/delete-income/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           console.log(response.data);
           toast.success('Income deleted successfully!');
-          getIncomes(); // Refresh the income list after deletion
+          getIncomes();
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
           toast.error(`Error: ${errorMessage}`);
         }
-        getIncomes();
       }
 
       const totalIncome = () => {
@@ -77,7 +88,10 @@ export const GlobalProvider = ({ children }) => {
 
       const addExpense = async (expense) => {
         try {
-          const response = await axios.post(`${BASE_URL}/add-expense`, expense);
+          const token = localStorage.getItem('token');
+          const response = await axios.post(`${BASE_URL}/add-expense`, expense, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           console.log(response.data);
           toast.success('Expense added successfully!');
         } catch (err) {
@@ -90,7 +104,10 @@ export const GlobalProvider = ({ children }) => {
 
       const getExpenses = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/get-expense`);
+          const token = localStorage.getItem('token');
+          const response = await axios.get(`${BASE_URL}/get-expense`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           setExpenses(response.data);
           console.log(response.data);
         } catch (err) {
@@ -101,7 +118,10 @@ export const GlobalProvider = ({ children }) => {
 
       const updateExpense = async (id, expense) => {
         try {
-          const response = await axios.put(`${BASE_URL}/update-expense/${id}`, expense);
+          const token = localStorage.getItem('token');
+          const response = await axios.put(`${BASE_URL}/update-expense/${id}`, expense, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           toast.success('Expense updated successfully!');
           getExpenses();
         } catch (err) {
@@ -113,16 +133,18 @@ export const GlobalProvider = ({ children }) => {
       
       const deleteExpense = async (id) => {
         try {
-          const response = await axios.delete(`${BASE_URL}/delete-expense/${id}`);
+          const token = localStorage.getItem('token');
+          const response = await axios.delete(`${BASE_URL}/delete-expense/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           console.log(response.data);
           toast.success('Expense deleted successfully!');
-          getExpenses(); // Refresh the income list after deletion
+          getExpenses();
         } catch (err) {
           const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
           setError(errorMessage);
           toast.error(`Error: ${errorMessage}`);
         }
-        getExpenses();
       }
 
       const totalExpense = () => {
