@@ -4,6 +4,10 @@ import { InnerLayout } from '../../styles/Layouts'
 import { useGlobalContext } from '../../context/globalContext'
 import Button from '../Button/Button'
 import IncomeItem from '../incomeItem/incomeItem'
+import { Pie } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 function ViewTransactions() {
   const { incomes, expenses, getIncomes, getExpenses, deleteIncome, deleteExpense, setEditingItem } = useGlobalContext()
@@ -47,6 +51,44 @@ function ViewTransactions() {
       return incomes.filter(item => item.category === selectedCategory)
     } else {
       return expenses.filter(item => item.category === selectedCategory)
+    }
+  }
+
+  const getPieChartData = (categoryTotals, type) => {
+    const colors = type === 'income' 
+      ? ['#42ad00', '#00d4aa', '#0099cc', '#6666ff', '#9933cc', '#ff6600', '#ff3366', '#ffcc00']
+      : ['#ff4757', '#ff6b81', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#10ac84']
+    
+    return {
+      labels: Object.keys(categoryTotals),
+      datasets: [{
+        data: Object.values(categoryTotals),
+        backgroundColor: colors.slice(0, Object.keys(categoryTotals).length),
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    }
+  }
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          padding: 20,
+          usePointStyle: true
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || ''
+            const value = context.parsed || 0
+            return `${label}: Rs.${value}`
+          }
+        }
+      }
     }
   }
 
@@ -113,22 +155,32 @@ function ViewTransactions() {
             {activeTab === 'income' ? (
               <div>
                 <h2>Income by Category</h2>
-                {Object.entries(incomeCategoryTotals).map(([category, total]) => (
-                  <div key={category} className="category-item" onClick={() => handleCategoryClick(category)}>
-                    <span className="category-name">{category}</span>
-                    <span className="category-total income-total">Rs.{total}</span>
-                  </div>
-                ))}
+                <div className="chart-container">
+                  <Pie data={getPieChartData(incomeCategoryTotals, 'income')} options={chartOptions} />
+                </div>
+                <div className="category-list">
+                  {Object.entries(incomeCategoryTotals).map(([category, total]) => (
+                    <div key={category} className="category-item" onClick={() => handleCategoryClick(category)}>
+                      <span className="category-name">{category}</span>
+                      <span className="category-total income-total">Rs.{total}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
               <div>
                 <h2>Expenses by Category</h2>
-                {Object.entries(expenseCategoryTotals).map(([category, total]) => (
-                  <div key={category} className="category-item" onClick={() => handleCategoryClick(category)}>
-                    <span className="category-name">{category}</span>
-                    <span className="category-total expense-total">Rs.{total}</span>
-                  </div>
-                ))}
+                <div className="chart-container">
+                  <Pie data={getPieChartData(expenseCategoryTotals, 'expense')} options={chartOptions} />
+                </div>
+                <div className="category-list">
+                  {Object.entries(expenseCategoryTotals).map(([category, total]) => (
+                    <div key={category} className="category-item" onClick={() => handleCategoryClick(category)}>
+                      <span className="category-name">{category}</span>
+                      <span className="category-total expense-total">Rs.{total}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -157,6 +209,20 @@ const ViewTransactionsStyled = styled.div`
       color: rgba(34, 34, 96, 1);
       margin-bottom: 1rem;
       text-align: center;
+    }
+
+    .chart-container {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #FCF6F9;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.04);
+      border-radius: 20px;
+    }
+
+    .category-list {
+      margin-top: 2rem;
     }
 
     .category-item {
