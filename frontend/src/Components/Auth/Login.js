@@ -18,8 +18,9 @@ function Login({ onLogin, switchToSignup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const BASE_URL =  process.env.REACT_APP_BASE_URL;
     try {
-      const response = await fetch('http://localhost:5000/api/v1/login', {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

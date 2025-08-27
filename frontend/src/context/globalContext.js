@@ -4,7 +4,7 @@
  import 'react-toastify/dist/ReactToastify.css';
  import { ToastContainer } from 'react-toastify';
 
-const BASE_URL = 'http://localhost:5000/api/v1';
+const BASE_URL = process.env.REACT_APP_BASE_URL ;
 const GlobalContext = React.createContext();
 export const GlobalProvider = ({ children }) => {
       const [expenses,setExpenses] = useState([]);
